@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+   php:
+     build:
+       context: .\
+     container_name: php7.4
+     ports:
+       - "8080:80"
+     depends_on :
+           - db
+     networks :
+         - data
+         - base_mysql
+   db :
+     image : mysql:8.0  # image docker mysql
+     restart : always
+     container_name : mysql8  # nom du container
+     environment :
+       MYSQL_ROOT_PASSWORD : root  # mot de passe root
+       MYSQL_USER : nair  # nom d'utilisateur
+       MYSQL_PASSWORD : pass  # mot de passe de l'utilisateur
+       MYSQL_DATABASE : ecommerce # nom de la base de données
+
+     ports :
+       - "3306:3306"  # port 3306 à utiliser
+     volumes :
+       - database:/var/lib/mysql  # utilisation du volume nommé
+     networks :
+       - base_mysql
+
+
+   phpmyadmin :
+     image : phpmyadmin/phpmyadmin
+     restart : always
+     environment :
+       PMA_HOST : db
+       PMA_USER :  nair
+       PMA_PASSWORD : pass
+     container_name : phpmyadmin
+     ports :
+       - "8900:80"  # port 8899 à utiliser
+     networks :
+       - data
+       - base_mysql
+
+
+volumes:
+  database:
+networks:
+  base_mysql:
+    driver: bridge
+  data:
+    driver: bridge
