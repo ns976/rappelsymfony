@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Hello {{ prenom }}
+{% endblock %}
+
+{% block body %}
+	{% set formateur=formateur1 %}
+	{% include '_shared/formateur_info.html.twig'  %}
+	{% set formateur=formateur2 %}
+	{% include '_shared/formateur_info.html.twig' with { "formateur":formateur2} %}
+
+{% endblock %}
+
+
