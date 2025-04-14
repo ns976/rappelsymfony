@@ -2,6 +2,7 @@
 namespace App\Controller;
 
     use App\Entity\Product;
+    use App\Repository\ProductRepository;
     use Cocur\Slugify\Slugify;
     use Doctrine\ORM\EntityManager;
     use Doctrine\ORM\EntityManagerInterface;
@@ -12,12 +13,14 @@ namespace App\Controller;
     class HomeController extends AbstractController
     {
 
+
         /**
          * @Route("/",name="homepage")
          */
         public
-        function homepage () : Response
+        function homepage (ProductRepository $productRepository) : Response
         {
-            return $this -> render( 'home.html.twig');
+            $produitPhares = $productRepository->findBy( [], ['id' => 'DESC'], 3);
+            return $this -> render( 'home.html.twig',['produitPhares'=>$produitPhares]);
         }
     }
