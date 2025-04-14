@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+
+    use OutilsEntity;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,6 +31,16 @@ class Category
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
+     */
+    private $product;
+
+    public function __construct()
+    {
+        $this->product = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,21 +51,40 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
-        return $this;
-    }
 
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProduct(): Collection
     {
-        $this->slug = $slug;
+        return $this->product;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
+            $product->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->product->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
+            }
+        }
 
         return $this;
     }
