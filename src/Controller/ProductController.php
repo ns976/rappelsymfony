@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -42,5 +46,29 @@ class ProductController extends AbstractController
         }
 
         return $this->render('product/product.html.twig', compact( 'product' ) );
+    }
+
+
+    /**
+     * @Route("/admin/product/create", name="product_create")
+     */
+    public function create( EntityManagerInterface $em,Request $request ) : Response
+    {
+        $formulaire = $this->createForm( ProductType::class);
+
+        $formulaire->handleRequest( $request );
+        if($formulaire->isSubmitted() && $formulaire->isValid()){
+            $product = $formulaire->getData();
+            $product->setSlug($product->getname());
+
+            $em->persist($product);
+            $em->flush();
+            $this->addFlash('success','Produit crée avec succès');
+            return $this->redirectToRoute('product_category', ['slug' => $product->getCategory()->getSlug() ]);
+        }
+
+
+
+        return $this->render('product/create.html.twig',['form'=>$formulaire->createView()] );
     }
 }
