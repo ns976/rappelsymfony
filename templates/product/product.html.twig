@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+		<li class="breadcrumb-item"><a
+					href="{{ path('product_category',{'slug':product.category.slug}) }}">{{ product.category.name }}</a></li>
+		<li class="breadcrumb-item active">{{ product.name }}</li>
+	</ol>
+{#	{% if is_granted('ROLE_ADMIN') %}
+		<div class="card border-primary mb-3" style="max-width: 20rem;">
+			<div class="card-header"><i class="fa-solid fa-lock"></i> Mode admin</div>
+			<div class="card-body row">
+				<div class="col">
+					<a href="{{ path('editProduit',{'id':product.id}) }}" class="btn btn-danger btn-sm">
+						<i class="fa-solid fa-pen-to-square"></i> modifie le produit
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}#}
+{#	{% if edit_product is defined %}
+		<div class="alert alert-dismissible alert-info">
+			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			Le produit {{ product.name }} a bien été modifié .
+		</div>
+	{% endif %}#}
+	<h1>{{ product.name }}</h1>
+	<span class="badge bg-success mt-3 mb-3 font">
+		<h5>{{ product.price }}  &euro;</h5>
+	</span>
+	<div class="row">
+		<div class="col-4">
+			<img class="img-fluid" src="{{ product.picture }}" alt="Image de {{ product.name }}">
+		</div>
+		<div class="col">
+			<span class="badge badge-info" style="color:black;">{{ product.category.name }} </span>
+			<p>{{ product.description }}</p>
+{#			{% if product.quantite <= 5   and product.quantite > 0 %}
+				<p>
+					<i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff0000;"></i>
+					<em class="text-danger">Plus que {{ product.quantite  }} articles disponibles </em>
+				</p>
+			{% endif %}
+			{% if product.quantite <= 0 %}
+				<i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff0000;"></i> <em class="text-danger">Rupture de stock</em>
+			{% else %}
+				<a href="{{ path('cart_add',{'idproduct':product.id}) }}" class="btn btn-success btn-lg">
+					<i class="fas fa-shopping-cart"></i>
+					Ajouter au panier
+				</a>
+			{% endif %}#}
+
+			<a href="{{ path('product_category', {'slug':product.category.slug}) }}" class="btn btn-primary btn-sm">Précèdent</a>
+{#			{% if is_granted("ROLE_ADMIN") %}
+				<a href="{{ path('deleteProduit',{'id':product.id}) }}" class="btn btn-danger btn-lg">Supprimer </a>
+			{% endif %}#}
+		</div>
+
+	</div>
+
+{% endblock %}

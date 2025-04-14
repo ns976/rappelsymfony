@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Catégorie {% endblock %}
+
+
+
+{% block body %}
+	<h1><i class="fa-solid fa-list"></i> {{ category.name }}</h1>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
+		<li class="breadcrumb-item active">{{ category.name }}</li>
+	</ol>
+	<div class="row">
+		<p><i class="fa-solid fa-circle-info" style="color: #74C0FC;"></i> <strong>{{ category.product|length }}</strong> produit(s) disponible.</p>
+		{% for product in category.product %}
+
+			{% include '_shared/_product.html.twig' with{
+				'col_class' :'col-3',
+				'img' : product.picture  ,
+				'name' : product.name,
+				'price' : product.price,
+				'description' : product.description,
+				'idproduct' :product.id,
+				'slugCategory' :category.slug,
+				'slugProduct' :product.slug
+			} %}
+
+		{% endfor %}
+	</div>
+
+{% endblock %}
+
