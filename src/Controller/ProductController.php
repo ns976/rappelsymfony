@@ -42,7 +42,7 @@ class ProductController extends AbstractController
         $product =  $ProductRepository->findOneBy( ['slug' => $slug_product]);
 
         if( !$product ) {
-            throw $this->createNotFoundException('le produit n\'existe pas');
+            throw $this->createNotFoundException("le produit existe pas");
         }
 
         return $this->render('product/product.html.twig', compact( 'product' ) );
@@ -54,6 +54,7 @@ class ProductController extends AbstractController
      */
     public function create( EntityManagerInterface $em,Request $request ) : Response
     {
+
         $formulaire = $this->createForm( ProductType::class);
 
         $formulaire->handleRequest( $request );
@@ -63,12 +64,39 @@ class ProductController extends AbstractController
 
             $em->persist($product);
             $em->flush();
-            $this->addFlash('success','Produit crée avec succès');
+            $this->addFlash('success','Produit crée avec succèss');
             return $this->redirectToRoute('product_category', ['slug' => $product->getCategory()->getSlug() ]);
         }
 
 
 
         return $this->render('product/create.html.twig',['form'=>$formulaire->createView()] );
+    }
+
+
+    /**
+     * @Route("/admin/product/edit/{id}", name="product_edit")
+     */
+    public function edit( int $id, EntityManagerInterface $em, ProductRepository $productRepository , Request $request ) : Response
+    {
+        $product = $productRepository->find( $id);
+        if(!$product){
+            $this->addFlash('warning','Le produit n\'existe pas ou plus');
+            return $this->redirectToRoute('homepage' );
+        }
+
+
+        $formulaire = $this->createForm( ProductType::class,$product);
+        $formulaire->handleRequest( $request );
+        if($formulaire->isSubmitted() && $formulaire->isValid()){
+            $product->setSlug($product->getname());
+            $em->flush();
+            $this->addFlash('success','Produit modifié  avec succèss');
+            return $this->redirectToRoute('showproduct', ['slug_category' => $product->getCategory()->getSlug() ,'slug_product'=> $product->getSlug()]);
+        }
+
+
+
+        return $this->render('product/edit.html.twig',['form'=>$formulaire->createView(),"product"=>$product] );
     }
 }

@@ -22,7 +22,8 @@ class ProductType extends AbstractType
 
         $faker = Factory ::create( 'fr_FR' );
         $faker -> addProvider( new \Bluemmb\Faker\PicsumPhotosProvider( $faker ) );
-        $image_default = empty($builder->getData()) ? $faker -> imageUrl( 200 , 200 , true )  :$builder->getData()->getImg();
+        $image_default = empty($builder->getData()) ? $faker -> imageUrl( 200 , 200 , true )  :$builder->getData()->getPicture();
+
 
         $builder
             ->add('name', TextType::class, [
@@ -30,6 +31,7 @@ class ProductType extends AbstractType
                 'label_attr' => ['class' => 'form-label fw-bold'],
                 'required' => false,
                 'help' => 'Le nom du produit',
+
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Saisir le nom du produit'
@@ -44,6 +46,7 @@ class ProductType extends AbstractType
                     'placeholder' => 'Saisir le prix du produit'
                 ],
             ])
+
             ->add('picture', UrlType::class, [
                 'label' => 'Image',
                 'data' => $image_default,
@@ -69,6 +72,7 @@ class ProductType extends AbstractType
                 'help' => 'La catégorie rattachée au produit',
                 'placeholder' => '-- Choisir une catégorie --',
                 'class' => Category::class,
+//                'choice_label' => "name",
                 'choice_label' => function (Category $category) {
                     return strtoupper($category->getName());
                 },
@@ -82,8 +86,18 @@ class ProductType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+
+
         $resolver->setDefaults([
             'data_class' => Product::class,
+            'method' => 'POST',
+
+            [
+                'attr' => [
+                    'class' => 'needs-validation',
+                    'novalidate' => 'novalidate'
+                ]
+            ]
         ]);
     }
 }

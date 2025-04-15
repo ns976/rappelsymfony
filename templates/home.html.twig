@@ -13,7 +13,7 @@
 						<div class="card-body">
 							<h4 class="card-title">{{ p.name }}</h4>
 							<a href="{{ path('product_category',{'slug': p.category.slug}) }}">
-								<span class="badge badge-info">{{ p.category.name }}</span>
+								<span class="badge bg-dark">{{ p.category.name }}</span>
 							</a>
 							<p class="card-text">{{ p.description }}</p>
 							<p class="card-text"><small>Montant de {{ p.price }} &euro;</small></p>

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}Création d'un produit {% endblock %}
+
 {% block body %}
 	{{ form_start(form) }}
 	<fieldset>
-		<legend class="mb-4">🆕 Nouveau Pin</legend>
+		<legend class="mb-4">🆕 Nouvelle Catégorie</legend>
 
 		<div class="card shadow-sm border-0 mb-4">
 			<div class="card-body">
@@ -13,24 +13,9 @@
 							{{ form_row(form.name) }}
 						</div>
 
-						<div class="mb-3">
-							{{ form_row(form.category) }}
-						</div>
 
-						<div class="mb-3">
-							{{ form_row(form.price) }}
-						</div>
 					</div>
 
-					<div class="col-md-6">
-						<div class="mb-3">
-							{{ form_row(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
-						</div>
-
-						<div class="mb-3">
-							{{ form_row(form.picture, {'attr': {'class': 'form-control'}}) }}
-						</div>
-					</div>
 				</div>
 
 				<div class="text-end mt-4">
@@ -43,7 +28,9 @@
 	</fieldset>
 	{{ form_end(form) }}
 
-
 {% endblock %}
 
+{% block title %}
+	Créer une catégorie
+{% endblock %}
 

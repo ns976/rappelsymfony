@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -20,11 +21,14 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom de doit pas être vide")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le prix  de doit pas être vide")
+     * @Assert\GreaterThan(message="Le prix doit être plus grand que 0", value=0)
      */
     private $price;
 
@@ -41,6 +45,7 @@ class Product
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="La description  de doit pas être vide")
      */
     private $description;
 
