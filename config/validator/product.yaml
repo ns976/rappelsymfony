@@ -1,0 +1,13 @@
+#App\Entity\Product:
+#    properties:
+#        name:
+#            - NotBlank: {message: 'le nom ne peut pas être vide'}
+#            - Length: { min: 3, max: 255, minMessage: 'le nom doit contenir au moins {{ limit }} caractères', maxMessage: 'le nom ne peut pas dépasser {{ limit }} caractères'}
+#        description:
+#            - NotBlank: ~
+#            - Length:
+#                min: 10
+#                max: 1000
+#        price:
+#            - NotBlank: ~
+#            - Positive: ~

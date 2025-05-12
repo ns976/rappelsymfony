@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -35,7 +36,6 @@ class ProductType extends AbstractType
                 'label_attr' => ['class' => 'form-label fw-bold'],
                 'required' => false,
                 'help' => 'Le nom du produit',
-
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Saisir le nom du produit'
@@ -55,6 +55,7 @@ class ProductType extends AbstractType
                 'label' => 'Image',
                 'data' => $image_default,
                 'help' => 'L’URL de l’image',
+                'required'=>false,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'https://exemple.com/image.jpg'

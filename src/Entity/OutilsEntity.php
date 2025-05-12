@@ -13,7 +13,7 @@
             return $this;
         }
 
-        public function setName(string $name): self
+        public function setName(?string $name): self
         {
             $this->name = ucfirst( strtolower($name));
 

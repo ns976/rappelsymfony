@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -12,6 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThan;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductController extends AbstractController
 {
@@ -55,6 +63,7 @@ class ProductController extends AbstractController
     public function create( EntityManagerInterface $em,Request $request ) : Response
     {
 
+
         $formulaire = $this->createForm( ProductType::class);
 
         $formulaire->handleRequest( $request );
@@ -77,8 +86,9 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/edit/{id}", name="product_edit")
      */
-    public function edit( int $id, EntityManagerInterface $em, ProductRepository $productRepository , Request $request ) : Response
+    public function edit( int $id, EntityManagerInterface $em, ProductRepository $productRepository , Request $request ,ValidatorInterface $validator) : Response
     {
+
         $product = $productRepository->find( $id);
         if(!$product){
             $this->addFlash('warning','Le produit n\'existe pas ou plus');

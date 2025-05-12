@@ -22,13 +22,15 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le nom de doit pas être vide")
+     * @Assert\Length(min=3, max=255, minMessage="Le nom doit faire au moins {{ limit }} caractères", maxMessage="Le nom ne doit pas dépasser {{ limit }} caractères")
+     * @Assert\Length( max=10, maxMessage="Le nom ne doit pas dépasser {{ limit }} caractères",groups={"large_name"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Le prix  de doit pas être vide")
-     * @Assert\GreaterThan(message="Le prix doit être plus grand que 0", value=0)
+     * @Assert\NotBlank(message="Le prix  de doit pas être vide",groups={"price"})
+     * @Assert\GreaterThan(message="Le prix doit être plus grand que {{ value }}", value=0)
      */
     private $price;
 
@@ -46,11 +48,14 @@ class Product
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="La description  de doit pas être vide")
+     * @Assert\LessThan(value=10,message="La description  doit faie au moins {{ value }} caractères")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message="La photo doit être une URL valide")
+     * @Assert\NotBlank(message="La photo  ne  doit pas être vide")
      */
     private $picture;
 
@@ -75,7 +80,7 @@ class Product
         return $this->price/100;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(?int $price): self
     {
         $this->price = $price;
 
@@ -106,7 +111,7 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -118,7 +123,7 @@ class Product
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 
