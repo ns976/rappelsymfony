@@ -4,14 +4,10 @@
 		<div class="card-body">
 			<h5 class="card-title">{{ name }}  </h5>
 			<small>{{ price  }} &euro;</small>
-			{% if slugCategory   is defined  and category_name is defined %}
-				<span class="badge bg-dark">
-					<a href="#" style="color:white;">{{ category_name }}</a>
-				</span>
-			{% endif %}
+
 			<p class="card-text">{{ description }}</p>
 				<a href="#" class="btn btn-success btn-sm"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>
-				<a href="{{ path('showproduct',{"slug_category":slugCategory,'slug_product':slugProduct }) }}" class="btn btn-primary btn-sm">Details</a>
+				<a href="{{ path('showproduct',{'slug_product':slugProduct }) }}" class="btn btn-primary btn-sm">Details</a>
 				<a href="{{ path('product_edit',{"id":idproduct}) }}" class="btn btn-info btn-sm">Modifié</a>
 		</div>
 	</div>
