@@ -35,9 +35,9 @@ class ProductController extends AbstractController
 
 
     /**
-     * @Route("/{slug_category}/{slug_product}", name="showproduct")
+     * @Route("/show/{slug_product}", name="showproduct",priority="-1")
      */
-    public function showproduct(string $slug_category, string $slug_product, ProductRepository $ProductRepository): Response
+    public function showproduct( string $slug_product, ProductRepository $ProductRepository): Response
     {
         $product =  $ProductRepository->findOneBy( ['slug' => $slug_product]);
 
@@ -92,7 +92,7 @@ class ProductController extends AbstractController
             $product->setSlug($product->getname());
             $em->flush();
             $this->addFlash('success','Produit modifié  avec succèss');
-            return $this->redirectToRoute('showproduct', ['slug_category' => $product->getCategory()->getSlug() ,'slug_product'=> $product->getSlug()]);
+            return $this->redirectToRoute('showproduct', ['slug_product'=> $product->getSlug()]);
         }
 
 
