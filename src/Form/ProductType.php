@@ -4,15 +4,19 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Form\DataTransformer\CentimesTransformer;
 use Faker\Factory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
@@ -80,6 +84,17 @@ class ProductType extends AbstractType
                     'class' => 'form-select'
                 ],
             ]);
+        //$builder->get('price')->addModelTransformer( new CentimesTransformer);
+
+        //eventListener PRE SET DATA SI ON VEUT PAS AFFICHE CHAMPS CATEGORIE DANS EDIT DUN PRODUIT
+ /*       $builder->addEventListener( FormEvents::PRE_SET_DATA , function ( FormEvent $event) {
+            $form = $event -> getForm();
+
+            $product = $event -> getData();
+            if ( $product -> getId() !== null ) {
+                $form-> remove( 'category' );
+            }
+        } );*/
 
 
     }
