@@ -29,7 +29,7 @@ class Product
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Le prix  de doit pas être vide",groups={"price"})
+     * @Assert\NotBlank(message="Le prix  de doit pas être vide")
      * @Assert\GreaterThan(message="Le prix doit être plus grand que {{ value }}", value=0)
      */
     private $price;
