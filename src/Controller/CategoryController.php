@@ -43,9 +43,10 @@ class CategoryController extends AbstractController
 
 
     /**
+     *
      * @Route("/admin/category/{id}/edit", name="category_edit")
      */
-    public function edit(int$id,Request $request,CategoryRepository $categoryRepository): Response
+    public function edit(int $id,Request $request,CategoryRepository $categoryRepository): Response
     {
 
         $categorie = $categoryRepository->find($id);

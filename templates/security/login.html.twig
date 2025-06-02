@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+ <legend>Connexion</legend>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.message |trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    {{ form_start(form) }}
+    <div class="row mb-3">
+        {{ form_row(form.email ) }}
+    </div>
+    <div class="row mb-3">
+        {{ form_row(form.password  ) }}
+    </div>
+
+    <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}">
+{#    <a href="{{ path('forgot_password') }}"><p>Mot de passe oublié</p></a>#}
+    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Connexion</button>
+{#    <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-right-to-bracket"></i> Creer un nouveau compte </button>#}
+
+    {{ form_end(form) }}
+
+
+</form>
+{% endblock %}

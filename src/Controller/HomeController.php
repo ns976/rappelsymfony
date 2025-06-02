@@ -15,7 +15,7 @@ namespace App\Controller;
 
 
         /**
-         * @Route("/",name="homepage")
+         * @Route("/",name="homepage",priority="3")
          */
         public
         function homepage (ProductRepository $productRepository) : Response

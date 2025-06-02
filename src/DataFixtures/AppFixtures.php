@@ -4,30 +4,35 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
     private $slug;
     private $em;
+    private $UserPasswordEncoder;
 
     /**
      * @param $slug
      */
     public
-    function __construct (SluggerInterface $slug,EntityManagerInterface $manager )
+    function __construct (SluggerInterface $slug,EntityManagerInterface $manager , UserPasswordHasherInterface $UserPasswordEncoder )
     {
         $this -> slug = $slug;
         $this -> em = $manager;
+        $this -> UserPasswordEncoder = $UserPasswordEncoder;
     }
 
 
-    public function load( ObjectManager $manager): void
+    public function load( ObjectManager $manager  ): void
     {
 
         $faker = Factory::create( 'fr_FR' );
@@ -57,6 +62,26 @@ class AppFixtures extends Fixture
                 $this -> em -> persist( $product );
             }
         }
+        //creation d'un admin
+        $admin = new User();
+        $hash = $this->UserPasswordEncoder->hashPassword( $admin , 'password' );
+        $admin->setEmail( 'admin@gmail.com' )
+              -> setRoles(['ROLE_ADMIN'])
+              -> setFullname( 'administrateur' )
+               ->setPassword( $hash );
+        $this -> em -> persist( $admin );
+
+        //creation de user
+        for($u=0;$u<5;$u++){
+            $user = new User();
+            $hash = $this->UserPasswordEncoder->hashPassword( $user , 'password' );
+            $user -> setEmail( 'user'.$u.'@gmail.com' )
+                  -> setRoles(['ROLE_USER'])
+                  -> setFullname( $faker->name().' '.$faker->firstName()  )
+                  -> setPassword(  $hash);
+            $this -> em -> persist( $user );
+        }
+
 
 
         $this->em->flush();

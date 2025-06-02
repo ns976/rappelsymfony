@@ -11,12 +11,14 @@
 						<span class="visually-hidden">(current)</span>
 					</a>
 				</li>
+				{% if app.user %}
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('product_create') }}"> <i class="fa-solid fa-square-plus" style="color: #74C0FC;"></i> Creation d'un produit</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('category_create') }}"><i class="fa-solid fa-square-plus" style="color: #74C0FC;"></i> Creation d'une catégorie</a>
 				</li>
+				{% endif %}
 				{% for categorie in categoryrepository.findAll %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('product_category',{'slug':categorie.slug}) }}">
@@ -28,10 +30,12 @@
 
 			</ul>
 			<ul class="navbar-nav ">
-				<li class="nav-items"><a href="#" class="nav-link">Inscription</a></li>
-				<li class="nav-items"><a href="#" class="btn btn-success">Login</a></li>
+
 				{% if app.user %}
-				<li class="nav-items"><a href="#" class="btn btn-danger">logout</a></li>
+				<li class="nav-items"><a href="{{ path('app_logout') }}" class="btn btn-danger">logout</a></li>
+				{% else %}
+					<li class="nav-items"><a href="#" class="nav-link">Inscription</a></li>
+					<li class="nav-items"><a href="{{ path('app_login') }}" class="btn btn-success">Login</a></li>
 				{% endif %}
 			</ul>
 		</div>
