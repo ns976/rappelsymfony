@@ -42,8 +42,9 @@ class CategoryController extends AbstractController
             $categorie->setOrwner($user);
             $this->em->persist( $categorie);
             $this->em->flush();
+            $this->addFlash( "success" , "La catégorie a été créée avec succès" );
         }
-        $this->addFlash( "success" , "La catégorie a été créée avec succès" );
+
         return $this->render('category/create.html.twig',['form'=>$form->createView()] );
     }
 

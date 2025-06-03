@@ -80,7 +80,7 @@ class ProductController extends AbstractController
 
             $em->persist($product);
             $em->flush();
-            $this->addFlash('success','Produit crée avec succèss');
+            $this->addFlash('success',"Le Produit ".$product->getname()." crée avec succèss");
             return $this->redirectToRoute('product_category', ['slug' => $product->getCategory()->getSlug() ]);
         }
 
@@ -99,12 +99,11 @@ class ProductController extends AbstractController
 
         $product = $productRepository->find( $id);
         if(!$product){
-            $this->addFlash('warning','Le produit n\'existe pas ou plus');
+            $this->addFlash('warning',"Le produit n\'existe pas ou plus");
             return $this->redirectToRoute('homepage' );
         }
+        // Vérification des droits d'accès
         $this->denyAccessUnlessGranted( ProductVoter::EDIT, $product,"Vous n'avez pas le droit de modifier ce produit" );
-
-
 
         $formulaire = $this->createForm( ProductType::class,$product);
         $formulaire->handleRequest( $request );
