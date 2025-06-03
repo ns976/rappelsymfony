@@ -76,6 +76,7 @@ class AppFixtures extends Fixture
                         -> setSlug( $this -> slug -> slug( $product -> getName() ) )
                         -> setDescription( $faker ->text(100) )
                         -> setPicture( $faker->imageUrl(400,400,true)  )
+                        -> setUserCreate( $user  )
                         -> setCategory( $category );
 
                     $this -> em -> persist( $product );

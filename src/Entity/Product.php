@@ -59,6 +59,11 @@ class Product
      */
     private $picture;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products")
+     */
+    private $userCreate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,18 @@ class Product
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getUserCreate(): ?User
+    {
+        return $this->userCreate;
+    }
+
+    public function setUserCreate(?User $userCreate): self
+    {
+        $this->userCreate = $userCreate;
 
         return $this;
     }

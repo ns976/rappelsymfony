@@ -19,12 +19,7 @@
 					<a class="nav-link" href="{{ path('category_create') }}"><i class="fa-solid fa-square-plus" style="color: #74C0FC;"></i> Creation d'une catégorie</a>
 				</li>
 				{% endif %}
-				{% for categorie in categoryrepository.findAll %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('product_category',{'slug':categorie.slug}) }}">
-							{{ categorie.name}}</a>
-					</li>
-				{% endfor %}
+
 
 
 

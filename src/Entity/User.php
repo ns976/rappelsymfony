@@ -50,10 +50,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $categorie;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="userCreate")
+     */
+    private $products;
+
     public function __construct()
     {
 
         $this->categorie = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +192,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($categorie->getOrwner() === $this) {
                 $categorie->setOrwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setUserCreate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getUserCreate() === $this) {
+                $product->setUserCreate(null);
             }
         }
 

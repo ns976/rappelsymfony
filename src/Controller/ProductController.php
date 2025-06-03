@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use App\Security\Voter\ProductVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -101,6 +102,8 @@ class ProductController extends AbstractController
             $this->addFlash('warning','Le produit n\'existe pas ou plus');
             return $this->redirectToRoute('homepage' );
         }
+        $this->denyAccessUnlessGranted( ProductVoter::EDIT, $product,"Vous n'avez pas le droit de modifier ce produit" );
+
 
 
         $formulaire = $this->createForm( ProductType::class,$product);
