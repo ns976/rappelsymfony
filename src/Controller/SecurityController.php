@@ -14,7 +14,7 @@ class SecurityController extends AbstractController
 {
     /**
      * Creation de la page connexon de utilisateur
-     * @Route("/login", name="app_login" , priority="2")
+     * @Route("/login", name="app_login" )
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
 
     /**
      * Deconnection de l'utilisateur
-     * @Route("/logout", name="app_logout" , priority="4")
+     * @Route("/logout", name="app_logout" )
      */
     public function logout(): void
     {}

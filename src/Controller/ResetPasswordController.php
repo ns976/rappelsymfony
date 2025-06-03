@@ -46,7 +46,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Display & process form to request a password reset.
      *
-     * @Route("", name="forgot_password", priority="3")
+     * @Route("", name="forgot_password")
      */
     public function request(Request $request, TranslatorInterface $translator): Response
     {
