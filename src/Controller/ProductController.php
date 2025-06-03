@@ -7,12 +7,15 @@ use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
@@ -21,6 +24,9 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à cette page.")
+ */
 class ProductController extends AbstractController
 {
 
@@ -88,6 +94,7 @@ class ProductController extends AbstractController
      */
     public function edit( int $id, EntityManagerInterface $em, ProductRepository $productRepository , Request $request ,ValidatorInterface $validator) : Response
     {
+//       $this->denyAccessUnlessGranted( "ROLE_ADMIN" ,null,"Vous n'avez pas accès necessaire" );
 
         $product = $productRepository->find( $id);
         if(!$product){

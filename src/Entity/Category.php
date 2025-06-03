@@ -39,6 +39,11 @@ class Category
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="categorie")
+     */
+    private $orwner;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -88,6 +93,18 @@ class Category
                 $product->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrwner(): ?User
+    {
+        return $this->orwner;
+    }
+
+    public function setOrwner(?User $orwner): self
+    {
+        $this->orwner = $orwner;
 
         return $this;
     }

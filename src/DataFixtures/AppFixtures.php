@@ -39,36 +39,13 @@ class AppFixtures extends Fixture
         $faker->addProvider(new \Liior\Faker\Prices($faker));
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce( $faker));
         $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider( $faker));
-
-
-       //creation de categories
-        for ( $c = 0 ; $c < 3 ; $c++ ) {
-            $category = new Category();
-            $category -> setName( $faker -> department() )
-                      -> setSlug( $this -> slug -> slug( $category -> getName() ) );
-            $this -> em -> persist( $category );
-
-
-            //creation de produits
-            for ( $i = 1 ; $i <= mt_rand( 15 , 20 ) ; $i++ ) {
-                $product = new Product();
-                $product -> setName( $faker -> productName() )
-                    -> setPrice( $faker -> price( 4000 , 20000 ) )
-                    -> setSlug( $this -> slug -> slug( $product -> getName() ) )
-                    -> setDescription( $faker ->text(100) )
-                    -> setPicture( $faker->imageUrl(400,400,true)  )
-                    -> setCategory( $category );
-
-                $this -> em -> persist( $product );
-            }
-        }
         //creation d'un admin
         $admin = new User();
         $hash = $this->UserPasswordEncoder->hashPassword( $admin , 'password' );
         $admin->setEmail( 'admin@gmail.com' )
-              -> setRoles(['ROLE_ADMIN'])
-              -> setFullname( 'administrateur' )
-               ->setPassword( $hash );
+            -> setRoles(['ROLE_ADMIN'])
+            -> setFullname( 'administrateur' )
+            ->setPassword( $hash );
         $this -> em -> persist( $admin );
 
         //creation de user
@@ -76,13 +53,35 @@ class AppFixtures extends Fixture
             $user = new User();
             $hash = $this->UserPasswordEncoder->hashPassword( $user , 'password' );
             $user -> setEmail( 'user'.$u.'@gmail.com' )
-                  -> setRoles(['ROLE_USER'])
-                  -> setFullname( $faker->name().' '.$faker->firstName()  )
-                  -> setPassword(  $hash);
+                -> setRoles(['ROLE_USER'])
+                -> setFullname( $faker->name().' '.$faker->firstName()  )
+                -> setPassword(  $hash);
             $this -> em -> persist( $user );
+
+            //creation de categories
+            for ( $c = 0 ; $c < 3 ; $c++ ) {
+                $category = new Category();
+                $category -> setName( $faker -> department() )
+                         -> setSlug( $this -> slug -> slug( $category -> getName() ) )
+                         ->setOrwner( $user);
+
+                $this -> em -> persist( $category );
+
+
+                //creation de produits
+                for ( $i = 1 ; $i <= mt_rand( 15 , 20 ) ; $i++ ) {
+                    $product = new Product();
+                    $product -> setName( $faker -> productName() )
+                        -> setPrice( $faker -> price( 4000 , 20000 ) )
+                        -> setSlug( $this -> slug -> slug( $product -> getName() ) )
+                        -> setDescription( $faker ->text(100) )
+                        -> setPicture( $faker->imageUrl(400,400,true)  )
+                        -> setCategory( $category );
+
+                    $this -> em -> persist( $product );
+                }
+            }
         }
-
-
 
         $this->em->flush();
     }

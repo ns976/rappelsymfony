@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,6 +42,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $fullname;
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="orwner")
+     */
+    private $categorie;
+
+    public function __construct()
+    {
+
+        $this->categorie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +153,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFullname(string $fullname): self
     {
         $this->fullname = $fullname;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Category $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie[] = $categorie;
+            $categorie->setOrwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Category $categorie): self
+    {
+        if ($this->categorie->removeElement($categorie)) {
+            // set the owning side to null (unless already changed)
+            if ($categorie->getOrwner() === $this) {
+                $categorie->setOrwner(null);
+            }
+        }
 
         return $this;
     }
