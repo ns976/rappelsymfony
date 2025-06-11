@@ -3,6 +3,8 @@ twig:
     form_themes: ['bootstrap_5_horizontal_layout.html.twig']
     globals:
         categoryrepository: '@App\Repository\CategoryRepository'
+        Productrepository: '@App\Repository\ProductRepository'
+        cartItem: '@App\cart\CartService'
 when@test:
     twig:
         strict_variables: true

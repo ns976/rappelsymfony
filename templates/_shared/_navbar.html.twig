@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-white" data-bs-theme="white">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('homepage') }}">Commerce</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,8 +25,14 @@
 
 			</ul>
 			<ul class="navbar-nav ">
-
 				{% if app.user %}
+
+				<a href="{{ path('cart_show') }}" class="btn btn-outline-dark mx-2">
+						<i class="fa-solid fa-cart-shopping fa-sm" style="color: #131313;"></i>
+						Mon panier
+						<span class="badge bg-dark text-white ms-1 rounded-pill">{{ cartItem.nbrItems }}</span>
+				</a>
+{#					<li class="nav-items"><a href="{{ path('cart_show') }}" class="btn btn-success">Mon panier </a></li>#}
 				<li class="nav-items"><a href="{{ path('app_logout') }}" class="btn btn-danger">logout</a></li>
 				{% else %}
 					<li class="nav-items"><a href="#" class="nav-link">Inscription</a></li>

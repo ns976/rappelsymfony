@@ -6,7 +6,7 @@
 			<small>{{ price  }} &euro;</small>
 
 			<p class="card-text">{{ description }}</p>
-				<a href="#" class="btn btn-success btn-sm"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>
+				<a href="{{ path('cart_add',{'idproduct':idproduct }) }}" class="btn btn-success btn-sm"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>
 				<a href="{{ path('showproduct',{'slug_product':slugProduct }) }}" class="btn btn-primary btn-sm">Details</a>
 				<a href="{{ path('product_edit',{"id":idproduct}) }}" class="btn btn-info btn-sm">Modifié</a>
 		</div>

@@ -38,7 +38,8 @@
 		<div class="col">
 			<span class="badge badge-info" style="color:black;">{{ product.category.name }} </span>
 			<p>{{ product.description }}</p>
-{#			{% if product.quantite <= 5   and product.quantite > 0 %}
+
+			{% if product.quantite <= 5   and product.quantite > 0 %}
 				<p>
 					<i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff0000;"></i>
 					<em class="text-danger">Plus que {{ product.quantite  }} articles disponibles </em>
@@ -47,11 +48,11 @@
 			{% if product.quantite <= 0 %}
 				<i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff0000;"></i> <em class="text-danger">Rupture de stock</em>
 			{% else %}
-				<a href="{{ path('cart_add',{'idproduct':product.id}) }}" class="btn btn-success btn-lg">
+				<a href="{{ path('cart_add',{'idproduct':product.id}) }}" class="btn btn-success  btn-sm">
 					<i class="fas fa-shopping-cart"></i>
 					Ajouter au panier
 				</a>
-			{% endif %}#}
+			{% endif %}
 
 			<a href="{{ path('product_category', {'slug':product.category.slug}) }}" class="btn btn-primary btn-sm">Précèdent</a>
 {#			{% if is_granted("ROLE_ADMIN") %}

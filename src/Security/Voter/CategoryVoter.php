@@ -30,7 +30,7 @@ class CategoryVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                return ($subject->getOrwner() === $user);
+                return ($subject->getOrwner() === $user  ||  in_array('ROLE_ADMIN',$user->getRoles()));
              break;
 
         }

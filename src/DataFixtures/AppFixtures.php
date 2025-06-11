@@ -77,6 +77,7 @@ class AppFixtures extends Fixture
                         -> setDescription( $faker ->text(100) )
                         -> setPicture( $faker->imageUrl(400,400,true)  )
                         -> setUserCreate( $user  )
+                        -> setQuantite( mt_rand(1,3))
                         -> setCategory( $category );
 
                     $this -> em -> persist( $product );

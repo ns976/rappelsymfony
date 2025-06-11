@@ -64,6 +64,13 @@ class Product
      */
     private $userCreate;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="La quantité est obligatoire")
+     * @Assert\Regex(pattern="/^\d+$/" , message="Le champ doit contenir uniquement des chiffres.")
+     */
+    private $quantite;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,6 +150,18 @@ class Product
     public function setUserCreate(?User $userCreate): self
     {
         $this->userCreate = $userCreate;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

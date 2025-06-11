@@ -9,7 +9,9 @@
 			{% for p in produitPhares %}
 				<div class="col">
 					<div class="card">
-						<img src="{{ asset(p.picture) }}" class='img-thumbnail' alt="img du produit">
+						<a href="{{ path('showproduct',{'slug_product':p.slug}) }}">
+							<img src="{{ asset(p.picture) }}" class='img-thumbnail' alt="img du produit">
+						</a>
 						<div class="card-body">
 							<h4 class="card-title">{{ p.name }}</h4>
 							<a href="{{ path('product_category',{'slug': p.category.slug}) }}">
@@ -19,6 +21,7 @@
 							<p class="card-text"><small>Montant de {{ p.price }} &euro;</small></p>
 
 							<a href="{{ path('showproduct',{'slug_product':p.slug}) }}" class="btn btn-primary btn-sm">Détails</a>
+							<a href="{{ path('cart_add',{'idproduct':p.id }) }}" class="btn btn-success btn-sm">Ajouter</a>
 
 						</div>
 					</div>

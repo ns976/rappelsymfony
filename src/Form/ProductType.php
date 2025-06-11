@@ -71,6 +71,15 @@ class ProductType extends AbstractType
                     'rows' => 5
                 ],
             ])
+            ->add( 'quantite', NumberType::class, [
+                'label' => 'Quantité',
+                'required' => false,
+                'help' => 'La quantité du produit',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Saisir la quantité du produit'
+                ],
+            ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'required' => false,
