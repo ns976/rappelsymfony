@@ -22,7 +22,6 @@ protected  $cartService;
     function __construct ( ProductRepository $ProductRepository ,CartService  $CartService)
     {
         $this -> ProductRepository = $ProductRepository;
-
         $this -> cartService = $CartService;
     }
 
@@ -38,17 +37,7 @@ protected  $cartService;
         if(!$product) {
             throw $this->createNotFoundException("Le produit n'existe pas");
         }
-        // Vérifier si le produit est déjà dans le panier
-        $cart =  $this -> cartService->getCart( );
-        // Si le produit est déjà dans le panier, on incrémente la quantité
-        if(array_key_exists( $idproduct , $cart)){
-            $cart[$idproduct]++;
-        }
-        // Si le produit n'est pas dans le panier, on l'ajoute avec une quantité de 1
-        else{
-            $cart[$idproduct] = 1;
-        }
-        $this -> cartService->setCart(  $cart );
+        $this->cartService->addProduct( $idproduct );
 
         $this->addflash( 'success', "Le produit ".$product->getName()." a été ajouté au panier" );
 
@@ -61,7 +50,7 @@ protected  $cartService;
     public function showcart(): Response
     {
 
-        $cart =   $this -> cartService ->getCart();
+        $cart     =   $this -> cartService ->getCart();
         $totalCart =   $this -> cartService ->totalCart();
 
         return $this->render( 'cart/show.html.twig', ['cart'=>$cart,'totalCart'=>$totalCart]);
@@ -75,16 +64,7 @@ protected  $cartService;
 
         $cart =    $this -> cartService ->getCart();
         if(array_key_exists( $idproduct , $cart)){
-            if($cart[$idproduct] <= 0){
-                // Si la quantité est 1, on supprime le produit du panier
-                unset($cart[$idproduct]);
-                $this -> cartService->setCart(  $cart );
-                $this->addflash( 'success', "Le produit a été supprimé du panier" );
-            }else {
-                $cart[ $idproduct ]--;
-                $this -> cartService->setCart(  $cart );
-            }
-
+            $this->cartService->removeProduct($cart,$idproduct);
         }else{
             $this->addflash( 'error', "Le produit n'est pas dans le panier" );
         }
@@ -99,15 +79,15 @@ protected  $cartService;
     {
          $cart = $this->cartService->getCart();
         if(array_key_exists( $idproduct , $cart)){
-            $cart[$idproduct]++;
-            $this -> cartService->setCart(  $cart );
-            $this->addflash( 'success', "La quantité du produit a été incrémentée" );
+           $this->cartService->addProduct($idproduct);
+            $this->addflash( 'success', "La quantité du produit a été ajouté" );
         }else{
             $this->addflash( 'error', "Le produit n'est pas dans le panier" );
         }
         return $this->redirectToRoute('cart_show');
     }
     /**
+     * Suprrime le produit du panier
      * @Route("/cart/delete/{idproduct<\d+>}", name="cart_delete")
      */
     public function delete(int $idproduct): Response
@@ -115,16 +95,14 @@ protected  $cartService;
 
         $cart = $this->cartService->getCart();
         if(array_key_exists( $idproduct , $cart)){
-            unset($cart[$idproduct]);
-            $this -> cartService->setCart(  $cart );
+            $this -> cartService->remove(  $cart ,$idproduct);
             $this->addflash( 'success', "Le produit a été supprimé du panier" );
-        }else{
-            $this->addflash( 'error', "Le produit n'est pas dans le panier" );
         }
 
         return $this->redirectToRoute('cart_show');
     }
     /**
+     * Supprime completeent tous le panier
      * @Route("/cart/deleteall", name="cart_delete_all")
      */
 

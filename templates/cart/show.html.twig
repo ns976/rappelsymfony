@@ -24,8 +24,8 @@
 
             {% for idproduct,quantite in cart %}
 
-               {% set product=Productrepository.find(idproduct) %}
-
+               {% set product= Productrepository.find(idproduct) %}
+                {% if product is not null %}
                 <tr>
                     <td>
                         <a href="{{ path("showproduct",{"slug_product":product.slug}) }}">
@@ -58,7 +58,7 @@
                         </a>
                     </td>
                 </tr>
-
+            {% endif %}
             {% endfor %}
 
             </tbody>

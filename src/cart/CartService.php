@@ -7,7 +7,7 @@
 
     class CartService
     {
-
+       const NAME_CART = 'cart';
         private $session;
         private $productRepository;
 
@@ -17,6 +17,52 @@
         }
 
         /**
+         * Ajoute un produit au panier
+         * @param int $idproduct
+         *
+         * @return void
+         */
+        public function addProduct(int $idproduct) : void  {
+            // Vérifier si le produit est déjà dans le panier
+            $cart =  $this ->getCart( );
+            // Si le produit est déjà dans le panier, on incrémente la quantité
+            if(array_key_exists( $idproduct , $cart)){
+                $cart[$idproduct]++;
+            }
+            // Si le produit n'est pas dans le panier, on l'ajoute avec une quantité de 1
+            else{
+                $cart[$idproduct] = 1;
+            }
+            $this ->setCart(  $cart );
+        }
+
+        /**
+         * Supprime un produit du panier
+         * @param array $cart
+         * @param int   $idproduct
+         *
+         * @return void
+         */
+        public function removeProduct(array $cart , int $idproduct): void
+        {
+            if ( $cart[ $idproduct ] <= 0 ) {
+                $this -> remove( $cart , $idproduct );
+            }
+            else {
+                $cart[ $idproduct ]--;
+                $this ->  setCart( $cart );
+            }
+        }
+
+
+        public function remove(array $cart, int $idproduct) : void {
+
+            if(array_key_exists( $idproduct , $cart)){
+                unset($cart[$idproduct]);
+                $this -> setCart(  $cart );
+            }
+        }
+        /**
          * Récupère le panier depuis la session ou retourne un tableau vide si le panier n'existe pas
          *
          * @return array
@@ -24,7 +70,7 @@
         public function getCart(): array
         {
             // Récupérer le panier depuis la session
-            return $this->session ->get('cart', []);
+            return $this->session ->get(self::NAME_CART, []);
         }
 
         /**
@@ -35,7 +81,7 @@
         public function setCart(array $cart): void
         {
             // Mettre à jour le panier dans la session
-            $this->session->set('cart', $cart);
+            $this->session->set(self::NAME_CART, $cart);
         }
 
         /**
@@ -82,10 +128,10 @@
          *
          * @param int $idproduct
          *
-         * @return float|void
+         * @return ?float
          */
         private
-        function getProductPrice ( int $idproduct )
+        function getProductPrice ( int $idproduct ) : ?float
         {
             $product = $this->productRepository->find($idproduct);
             if(!$product) {
