@@ -48,6 +48,8 @@
 
             /*  1/ je recuperate la commande de purchase */
             $purchase =  $PurchaseRepository->find( $id);
+
+            //regarde si un panier existe ou si user du panier est le meme que l'utilisateur connecté ou statut n'est pas payé
             if(!$purchase
                || ( ( $purchase && ( $purchase -> getUser() !== $this -> getUser() ) ) || ($purchase->getStatut() === Purchase::STATUT_PAYER ))){
                 $this->addFlash( "warning" , "Erreur : aucune commande existante.");

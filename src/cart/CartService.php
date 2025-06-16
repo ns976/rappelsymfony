@@ -59,9 +59,21 @@
             }
         }
 
+        /**
+         * Vide le panier du client
+         * @return void
+         */
         public function videPanier(){
             $this->setCart( [] );
         }
+
+        /**
+         * Supprime un produit du panier
+         * @param array $cart
+         * @param int   $idproduct
+         *
+         * @return void
+         */
         public function remove(array $cart, int $idproduct) : void {
 
             if(array_key_exists( $idproduct , $cart)){
@@ -71,7 +83,6 @@
         }
         /**
          * Récupère le panier depuis la session ou retourne un tableau vide si le panier n'existe pas
-         *
          * @return array
          */
         public function getCart(): array
@@ -82,7 +93,6 @@
 
         /**
          * Met à jour le panier dans la session
-         *
          * @param array $cart
          */
         public function setCart(array $cart): void
@@ -92,7 +102,7 @@
         }
 
         /**
-         * Retoure le total d'un panier
+         * Retourne le total d'un panier
          *
          */
         public function totalCart(): float{

@@ -15,3 +15,4 @@ import './styles/app.scss';
 import 'jquery/dist/jquery.slim.js';
 import 'popper.js/dist/umd/popper.js';
 import 'bootstrap/dist/js/bootstrap.js';
+import './js/payment.js';
