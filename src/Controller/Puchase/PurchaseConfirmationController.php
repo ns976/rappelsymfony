@@ -64,12 +64,22 @@ class PurchaseConfirmationController extends AbstractController
             $this->em->persist( $Purchase);
 
             $this->em->flush();
-            $this->addFlash( "success" , "Votre commande a &eacute;t&eacute; prise en compte");
+            $this->addFlash( "success" , "Votre commande a ete prise en compte");
 
             $this->CartService->videPanier();
-            return $this->redirectToRoute( 'homepage');
+            return $this->redirectToRoute( 'paiement');
         }
 
         return $this->render('purchases/confirmation.html.twig',['form'=>$form->createView()] );
+    }
+
+
+    /**
+     * @Route("/purchase/paiement", name="paiement")
+     * @return void
+     */
+    public function paiement() : Response{
+
+        return $this->render( "purchases/paiement.html.twig");
     }
 }

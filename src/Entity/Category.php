@@ -40,7 +40,7 @@ class Category
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="categorie")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="categorie")
      */
     private $orwner;
 
