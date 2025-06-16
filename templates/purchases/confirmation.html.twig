@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}Adresse de livraison{% endblock %}
+
+{% block body %}
+	{% include '_shared/_filarriane_panier.html.twig' with {
+		'panier':'completed' ,'adresse':'active','paiement':''} %}
+	<h1><i class="fa-solid fa-address-card"></i> Adresse de livraison</h1>
+
+	{{ form_start(form) }}
+	<div class="container mt-5">
+		<div class="mb-3">
+			{{ form_label(form.fullname) }}
+			{{ form_widget(form.fullname) }}
+		</div>
+			<div class="mb-3">
+				{{ form_label(form.adresse) }}
+				{{ form_widget(form.adresse) }}
+			</div>
+
+			<div class="row">
+				<div class="col-md-6 mb-3">
+					{{ form_label(form.codePostal) }}
+					{{ form_widget(form.codePostal) }}
+				</div>
+
+				<div class="col-md-6 mb-3">
+					{{ form_label(form.city) }}
+					{{ form_widget(form.city) }}
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Valider</button>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}

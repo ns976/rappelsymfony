@@ -66,6 +66,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/admin/product/create", name="product_create")
+     * @IsGranted("ROLE_USER", message="Vous n'avez pas accès necessaire")
      */
     public function create( EntityManagerInterface $em,Request $request ) : Response
     {
@@ -92,6 +93,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/admin/product/edit/{id}", name="product_edit")
+     * @IsGranted("ROLE_ADMIN", message="Vous n'avez pas accès necessaire")
      */
     public function edit( int $id, EntityManagerInterface $em, ProductRepository $productRepository , Request $request ,ValidatorInterface $validator) : Response
     {

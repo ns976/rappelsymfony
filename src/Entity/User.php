@@ -55,11 +55,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="User")
+     */
+    private $purchases;
+
     public function __construct()
     {
 
         $this->categorie = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +228,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($product->getUserCreate() === $this) {
                 $product->setUserCreate(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Purchase>
+     */
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases[] = $purchase;
+            $purchase->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            // set the owning side to null (unless already changed)
+            if ($purchase->getUser() === $this) {
+                $purchase->setUser(null);
             }
         }
 

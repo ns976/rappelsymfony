@@ -2,6 +2,7 @@
 
     namespace App\cart;
 
+    use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -139,6 +140,18 @@
                 return 0;
             }
             return $product->getPrice();
+        }
+
+
+
+        public function getProduct(int $idproduct): Product
+        {
+            $product = $this->productRepository->find($idproduct);
+            if(!$product) {
+                // Si le produit n'existe pas, retourner 0
+                return new Product();
+            }
+            return $product;
         }
 
         public function nbrItems(): int

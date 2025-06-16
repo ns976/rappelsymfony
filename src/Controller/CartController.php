@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\cart\CartService;
 use App\Repository\ProductRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,7 @@ protected  $cartService;
 
     /**
      * @Route("/cart/add/{idproduct<\d+>}", name="cart_add")
+     * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à cette page.")
      */
 
     public function add(int $idproduct ): Response

@@ -1,0 +1,54 @@
+
+{% set active = 'active' %}{#quand on  est sur la page en question   #}
+{% set completed= 'completed' %}{# quand on l'a terminé #}
+
+<div class="step-bubble-container">
+
+	{# partie panier  #}
+	{% if panier == 'active' %}
+		<div class="step-bubble {{ active }}">
+		<div class="circle">1</div>
+	{% elseif panier == 'completed' and panier is not empty %}
+		<div class="step-bubble {{ completed }}">
+		<div class="circle">&check;</div>
+	{% else %}
+		<div class="step-bubble">
+		<div class="circle">1</div>
+	{% endif %}
+		<div>
+			<i class="fa-solid fa-cart-arrow-down "></i>  Votre panier
+		</div>
+	</div>
+
+	{# partie adresse  #}
+	{% if adresse == 'active' %}
+		<div class="step-bubble {{ active }}">
+		<div class="circle">2</div>
+   {% elseif adresse == 'completed' and adresse is not empty %}
+		<div class="step-bubble {{ completed }}">
+		<div class="circle">&check;</div>
+	{% else %}
+		<div class="step-bubble">
+		<div class="circle">2</div>
+	{% endif %}
+		<div>
+			<i class="fa-solid fa-address-card"></i> Adresse de livraison
+	   </div>
+	 </div>
+
+	{# partie paiment  #}
+	{% if paiement == 'active' %}
+		<div class="step-bubble {{ active }}">
+		<div class="circle">3</div>
+	{% elseif paiement == 'completed' and paiement is not empty %}
+		<div class="step-bubble {{ completed }}">
+		<div class="circle">&check;</div>
+	{% else %}
+		<div class="step-bubble">
+		<div class="circle">3</div>
+	{% endif %}
+		<div>
+			<i class="fa-solid fa-credit-card"></i> Paiement
+		</div>
+	</div>
+</div>

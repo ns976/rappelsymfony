@@ -3,7 +3,11 @@
 {% block title %}Votre Panier{% endblock %}
 
 {% block body %}
-    <h1><i class="fa-solid fa-cart-arrow-down"></i>  Votre panier</h1>
+    {% include '_shared/_filarriane_panier.html.twig' with {
+        'panier':'active' ,'adresse':'','paiement':''} %}
+
+    <h3><i class="fa-solid fa-cart-arrow-down"></i>  Votre panier</h3>
+
     {% if cart is empty %}
         <div class="alert alert-dismissible alert-light">
             <h1><strong> <i class="fa-regular fa-face-frown fa-fade fa-xl"></i> Votre panier est vide </strong>.</h1>
@@ -73,6 +77,23 @@
                     </a>
                 </td>
             </tr>
+            {% if app.user %}
+            <tr>
+                <td colspan="6">
+                    <a href="{{ path("confirmPurchase") }}" class="btn btn-success">
+                        <i class="fa-solid fa-check"></i> Confirmer votre commande
+                    </a>
+                </td>
+            </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">
+                            <a href="{{ path("app_login") }}" class="btn btn-success">
+                                <i class="fa-solid fa-right-to-bracket fa-sm"></i> Se connecter
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
             </tfoot>
         </table>
 {#
