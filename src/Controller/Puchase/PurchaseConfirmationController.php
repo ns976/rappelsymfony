@@ -5,6 +5,7 @@ namespace App\Controller\Puchase;
 use App\cart\CartService;
 use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
+use App\Entity\User;
 use App\Form\CartConfirmationType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
@@ -32,14 +33,21 @@ class PurchaseConfirmationController extends AbstractController
     public function confirmPurchase(Request $request): Response
     {
         $Purchase = new Purchase();
-
+        /**@var $user User*/
         $User = $this->getUser();
         $form = $this->createForm( CartConfirmationType::class,$Purchase);
         $form->handleRequest($request);
+        //--Verifie si le panier est vide
+        if ( $this->CartService->CartIsEmpty() ) {
+            $this -> addFlash( "warning" , "Le panier est vide" );
+            return $this -> redirectToRoute( 'cart_show' );
+        }
+
         if($form->isSubmitted() && $form->isvalid()){
             $Purchase->setUser( $User)
                      ->setPuchaseAt(new \DateTimeImmutable())
-                     ->setTotal( $this->CartService->totalCart());
+                     ->setTotal( $this->CartService->totalCart())
+                      ->setStatut( Purchase::STATUT_PAYER);
 
             foreach ($this->CartService->getCart() as $idproduct=>$quantite){
                 $purchaseItem = new purchaseItem();
@@ -53,10 +61,12 @@ class PurchaseConfirmationController extends AbstractController
                 $Purchase ->addPurchaseItem( $purchaseItem);
             }
 
-
             $this->em->persist( $Purchase);
+
             $this->em->flush();
             $this->addFlash( "success" , "Votre commande a &eacute;t&eacute; prise en compte");
+
+            $this->CartService->videPanier();
             return $this->redirectToRoute( 'homepage');
         }
 

@@ -37,6 +37,10 @@
             $this ->setCart(  $cart );
         }
 
+        public function CartIsEmpty(){
+            return (count( $this->getCart() ) === 0);
+        }
+
         /**
          * Supprime un produit du panier
          * @param array $cart
@@ -55,7 +59,9 @@
             }
         }
 
-
+        public function videPanier(){
+            $this->setCart( [] );
+        }
         public function remove(array $cart, int $idproduct) : void {
 
             if(array_key_exists( $idproduct , $cart)){

@@ -18,30 +18,27 @@ class CartConfirmationType extends AbstractType
        $builder ->add('fullname',TextType::class,
            ['label'=> 'Nom  et prenom complet',
             'attr'=>['placeholder' => 'Nom complet pour la livraison' ],
-            'required'=>false,
-            'constraints'=>[new NotBlank(['message'=>"La saisie du nom complet  est obligatoire"])]
+            'required'=>false
            ]
        )
         ->add('adresse',TextType::class,
             ['label'=> 'Adresse de livraison',
 
              'attr'=>['placeholder' => '123 rue de l\'Exemple' ] ,
-             'required'=>false,
-             'constraints'=>[new NotBlank(['message'=>"La saisie de l'adresse  est obligatoire"])]
+             'required'=>false
             ]
         )
         ->add('codePostal',TextType::class,
             ['label'=> 'Code postal',
              'attr'=>['placeholder' => 'Votre code postal','maxlength' =>5],
-             'required'=>false,'constraints'=>[new NotBlank(['message'=>"La saisie du code postal  est obligatoire"])]
+             'required'=>false,
             ]
         )
         ->add('city',TextType::class,
             [
                 'label'=> 'Ville',
                 'attr'=>['placeholder' => 'Ville de livraison'],
-                'required'=>false,
-                'constraints'=>[new NotBlank(['message'=>"La saisie de la ville est obligatoire"])]
+                'required'=>false
             ] );
 
     }

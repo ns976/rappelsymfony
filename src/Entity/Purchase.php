@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
@@ -25,21 +26,26 @@ class Purchase
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La saisie du nom complet  est obligatoire")
      */
     private $fullname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La saisie de l'adresse  est obligatoire")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La saisie du code postal  est obligatoire")
+     * @Assert\Regex(  pattern="/^\d+$/",  message="Ce champ ne doit contenir que des chiffres.")
      */
     private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La saisie de la ville est obligatoire")
      */
     private $city;
 

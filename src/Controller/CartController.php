@@ -110,7 +110,7 @@ protected  $cartService;
 
     public function cartDeleteAll():Response
     {
-        $this->cartService->setCart([]);
+        $this->cartService->videPanier();
         return $this->redirectToRoute('cart_show');
     }
 }
