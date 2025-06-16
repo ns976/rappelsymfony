@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+	{% include '_shared/_filarriane_panier.html.twig' with {
+		'panier':'completed' ,'adresse':'completed','paiement':'active'} %}
+
+
+
+{% endblock %}

@@ -32,30 +32,35 @@ class PurchaseConfirmationController extends AbstractController
     */
     public function confirmPurchase(Request $request): Response
     {
-        $Purchase = new Purchase();
-        /**@var $user User*/
-        $User = $this->getUser();
-        $form = $this->createForm( CartConfirmationType::class,$Purchase);
-        $form->handleRequest($request);
+
         //--Verifie si le panier est vide
         if ( $this->CartService->CartIsEmpty() ) {
             $this -> addFlash( "warning" , "Le panier est vide" );
             return $this -> redirectToRoute( 'cart_show' );
         }
 
+
+        $Purchase = new Purchase();
+        /**@var $user User*/
+        $User = $this->getUser();
+        $form = $this->createForm( CartConfirmationType::class,$Purchase);
+        $form->handleRequest($request);
+
+
+
         if($form->isSubmitted() && $form->isvalid()){
             $Purchase->setUser( $User)
                      ->setPuchaseAt(new \DateTimeImmutable())
                      ->setTotal( $this->CartService->totalCart())
-                      ->setStatut( Purchase::STATUT_PAYER);
+                     ->setStatut( Purchase::STATUT_PAYER);
 
             foreach ($this->CartService->getCart() as $idproduct=>$quantite){
                 $purchaseItem = new purchaseItem();
                 $purchaseItem->setPurchase( $Purchase)
                              ->setProduct( $this->CartService->getProduct( $idproduct))
-                            ->setQuantite( $quantite)
-                            ->setProductName(  $this->CartService->getProduct( $idproduct)->getName())
-                            ->setProductPrice( $this->CartService->getProduct( $idproduct)->getPrice())
+                             ->setQuantite( $quantite)
+                             ->setProductName(  $this->CartService->getProduct( $idproduct)->getName())
+                             ->setProductPrice( $this->CartService->getProduct( $idproduct)->getPrice())
                              ->setTotal( $this->CartService->totalProduct($idproduct));
                 $this->em->persist( $purchaseItem);
                 $Purchase ->addPurchaseItem( $purchaseItem);

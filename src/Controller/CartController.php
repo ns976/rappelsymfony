@@ -104,7 +104,7 @@ protected  $cartService;
         return $this->redirectToRoute('cart_show');
     }
     /**
-     * Supprime completeent tous le panier
+     * Supprime complétement tout le panier
      * @Route("/cart/deleteall", name="cart_delete_all")
      */
 
