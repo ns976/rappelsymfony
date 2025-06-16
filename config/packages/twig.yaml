@@ -5,6 +5,7 @@ twig:
         categoryrepository: '@App\Repository\CategoryRepository'
         Productrepository: '@App\Repository\ProductRepository'
         cartItem: '@App\cart\CartService'
+        StripeService: '@App\Stripe\StripeService'
 when@test:
     twig:
         strict_variables: true

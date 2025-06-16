@@ -51,8 +51,7 @@ class PurchaseConfirmationController extends AbstractController
         if($form->isSubmitted() && $form->isvalid()){
             $Purchase->setUser( $User)
                      ->setPuchaseAt(new \DateTimeImmutable())
-                     ->setTotal( $this->CartService->totalCart())
-                     ->setStatut( Purchase::STATUT_PAYER);
+                     ->setTotal( $this->CartService->totalCart());
 
             foreach ($this->CartService->getCart() as $idproduct=>$quantite){
                 $purchaseItem = new purchaseItem();
@@ -72,19 +71,12 @@ class PurchaseConfirmationController extends AbstractController
             $this->addFlash( "success" , "Votre commande a ete prise en compte");
 
             $this->CartService->videPanier();
-            return $this->redirectToRoute( 'paiement');
+            return $this->redirectToRoute( 'purchase_payment_form',["id"=>$Purchase->getid()]);
         }
 
         return $this->render('purchases/confirmation.html.twig',['form'=>$form->createView()] );
     }
 
 
-    /**
-     * @Route("/purchase/paiement", name="paiement")
-     * @return void
-     */
-    public function paiement() : Response{
 
-        return $this->render( "purchases/paiement.html.twig");
-    }
 }
