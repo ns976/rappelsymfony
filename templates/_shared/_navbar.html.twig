@@ -6,11 +6,6 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor02">
 			<ul class="navbar-nav me-auto">
-				<li class="nav-item">
-					<a class="nav-link active" href="{{ path('homepage')}}">Home
-						<span class="visually-hidden">(current)</span>
-					</a>
-				</li>
 				{% if app.user %}
 					<a href="{{ path('product_create') }}" class="btn btn-outline-dark mx-2">
 						<i class="fa-solid fa-square-plus" style="color: #74C0FC;"></i>
