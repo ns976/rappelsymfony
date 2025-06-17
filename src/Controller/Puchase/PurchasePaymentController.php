@@ -44,7 +44,7 @@
          * @return Response
          */
         public function success(int $id , PurchaseRepository $PurchaseRepository,EntityManagerInterface $em,
-                                CartService $CartService, EventDispatcherInterface $EventDispatcherInterface ) : Response{
+                                CartService $CartService, EventDispatcherInterface $dispatcher ) : Response{
 
             /*  1/ je recuperate la commande de purchase */
             $purchase =  $PurchaseRepository->find( $id);
@@ -63,8 +63,8 @@
             $CartService->videPanier();
 
             //-- lancer un event envoie de mail de confirmation au client
-//            $purchaseEvent = new PurchaseSuccessEvent($purchase);
-//            $EventDispatcherInterface->dispatch( $purchaseEvent, PurchaseSuccessEvent::EVENT_SUCCESS_EMAIL );
+               $purchaseEvent = new PurchaseSuccessEvent($purchase);
+               $dispatcher->dispatch( $purchaseEvent, PurchaseSuccessEvent::EVENT_SUCCESS_EMAIL );
 
 
             /*4/ je redirige vers la liste des commandes*/

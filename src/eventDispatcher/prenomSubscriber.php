@@ -16,17 +16,18 @@
         }
 
         public function test1(){
-            dump('test1');
+          // dump('test1');
         }
         public function test2(){
-            dump('test2');
+            //dump('test2');
         }
 
         public static
         function getSubscribedEvents ()
         {
-         return   [  KernelEvents::REQUEST =>['addPrenomToAttribute'],
+       /*  return   [  KernelEvents::REQUEST =>['addPrenomToAttribute'],
                      KernelEvents::CONTROLLER =>'test1',
-                     KernelEvents::CONTROLLER_ARGUMENTS =>'test2'];
+                     KernelEvents::CONTROLLER_ARGUMENTS =>'test2'];*/
+            return [];
         }
     }

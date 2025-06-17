@@ -1,0 +1,35 @@
+<h1>Bonjour,  {{ user.fullname |upper}}</h1>
+<p>Nous vous remercions de votre commande  n°{{ purchase.id }} .
+	<br>Nous vous  tiendrons informé par e-mail lorsque les articles de votre commande auront été expédiés.</p>
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+	<div class="card-header">Confirmation de votre commande</div>
+	<div class="card-body">
+		<h4 class="card-title">Votre commande sera expédié à  :</h4>
+		<p class="card-text">{{ user.fullname |upper}}<br>{{ purchase.adresse}} <br>{{ purchase.city }}<br>{{ purchase.codePostal}}</p>
+	</div>
+</div>
+
+<table class="table table-hover">
+	<thead>
+	<th scope="col">Produit</th>
+	<th scope="col">Quantité</th>
+	<th scope="col">Prix unitaire</th>
+	<th scope="col">Total</th>
+	</thead>
+	<tbody>
+	{% for item in purchase.purchaseitems %}
+		<tr  class="table-active">
+			<td >{{ item.productName }}</td>
+			<td>{{ item.quantite }}</td>
+			<td>{{ item.productPrice |arrondie }}</td>
+			<td>{{ item.total |arrondie}} </td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="3">Total : </td>
+		<td><strong>{{ purchase.total |arrondie}}</strong></td>
+	</tr>
+	</tfoot>
+</table>
