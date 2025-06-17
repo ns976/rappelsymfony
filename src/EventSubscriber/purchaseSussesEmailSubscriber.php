@@ -1,10 +1,9 @@
 <?php
 
-    namespace App\eventDispatcher;
+    namespace App\EventSubscriber;
 
     use App\Entity\User;
     use App\Event\PurchaseSuccessEvent;
-    use App\Entity\Purchase;
     use Symfony\Bridge\Twig\Mime\TemplatedEmail;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\MailerInterface;

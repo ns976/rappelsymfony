@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Event\ProductViewEvent;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
@@ -24,6 +25,7 @@ use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @IsGranted("ROLE_USER", message="Vous devez être connecté pour accéder à cette page.")
@@ -52,13 +54,17 @@ class ProductController extends AbstractController
     /**
      * @Route("/show/{slug_product}", name="showproduct",priority="-1")
      */
-    public function showproduct( string $slug_product, ProductRepository $ProductRepository): Response
+    public function showproduct( string $slug_product, ProductRepository $ProductRepository,EventDispatcherInterface $EventDispatcher): Response
     {
         $product =  $ProductRepository->findOneBy( ['slug' => $slug_product]);
 
         if( !$product ) {
             throw $this->createNotFoundException("le produit existe pas");
         }
+
+        //Exercice : créer un événement ProductViewEvent et y réagir
+        $ProductViewEvent = new ProductViewEvent($product);
+        $EventDispatcher->dispatch( $ProductViewEvent,ProductViewEvent::EVENT_PRODUCT_VIEW);
 
         return $this->render('product/product.html.twig', compact( 'product' ) );
     }
