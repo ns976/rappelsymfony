@@ -18,7 +18,7 @@
 								<span class="badge bg-dark">{{ p.category.name }}</span>
 							</a>
 							<p class="card-text">{{ p.description }}</p>
-							<p class="card-text"><small>Montant de {{ p.price }} &euro;</small></p>
+							<p class="card-text"><small>Montant de {{ p.price |arrondie }}</small></p>
 
 							<a href="{{ path('showproduct',{'slug_product':p.slug}) }}" class="btn btn-primary btn-sm">Détails</a>
 							<a href="{{ path('cart_add',{'idproduct':p.id }) }}" class="btn btn-success btn-sm">Ajouter</a>

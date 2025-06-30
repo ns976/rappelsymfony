@@ -21,12 +21,12 @@
         public
         function getFilters () : array
         {
-            return [ new TwigFilter( 'arrondie' ,[$this, 'arrondie'] ) ,
+            return [ new TwigFilter( 'arrondie' ,[ $this , 'arrondie'] ) ,
             ];
         }
 
         public
-        function arrondie ( $value,string $symbol='€',string $separator=',',string $thousandsSeparator=' ') : string
+        function arrondie ( int $value,string $symbol='€',string $separator=',',string $thousandsSeparator=' ') : string
         {
             return number_format( $value , 2 , $separator , $thousandsSeparator ) . $symbol;
         }

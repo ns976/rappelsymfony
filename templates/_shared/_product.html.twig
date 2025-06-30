@@ -3,7 +3,7 @@
 		<img src="{{ img }}" alt="{{ name }}" class="img-fluid">
 		<div class="card-body">
 			<h5 class="card-title">{{ name }}  </h5>
-			<small>{{ price  }} &euro;</small>
+			<small>{{ price |arrondie}}  </small>
 
 			<p class="card-text">{{ description }}</p>
 				<a href="{{ path('cart_add',{'idproduct':idproduct }) }}" class="btn btn-success btn-sm"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>

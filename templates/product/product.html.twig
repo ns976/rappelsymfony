@@ -29,7 +29,7 @@
 	{% endif %}#}
 	<h1>{{ product.name }}</h1>
 	<span class="badge bg-success mt-3 mb-3 font">
-		<h5>{{ product.price }}  &euro;</h5>
+		<h5>{{ product.price |arrondie}} </h5>
 	</span>
 	<div class="row">
 		<div class="col-4">
