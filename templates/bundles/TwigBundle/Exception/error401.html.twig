@@ -1,0 +1,17 @@
+{% extends 'base_error.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('error-401') }}
+{% endblock %}
+{% block title %}
+		Erreur 401 - Non autorisé
+{% endblock %}
+{% block body %}
+<br><div class="container error-container">
+	<div class="error-code">401</div>
+	<div class="error-message">Accès non autorisé</div>
+	<p class="text-muted">Vous n'avez pas les autorisations nécessaires pour accéder à cette page.</p>
+	<a href="{{ path('homepage') }}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+</div>
+{% endblock %}

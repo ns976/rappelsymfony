@@ -1,0 +1,15 @@
+{% extends 'base_error.html.twig' %}
+	{%block title %}Erreur 404 - Page non trouvée{% endblock %}
+	{% block stylesheets %}
+		{{ parent() }}
+		{{ encore_entry_link_tags('error-403') }}
+	{% endblock %}
+{% block body %}
+<div>
+	<div class="error-code">404</div>
+	<div class="error-message">Page non trouvée</div>
+	<p class="text-muted">La page que vous recherchez est introuvable.</p>
+	<a href="{{ path('homepage') }}" class="btn btn-primary mt-3">Retour à l'accueil</a>
+</div>
+
+{% endblock %}

@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get install -y \
     && a2enmod rewrite
 
 # Copier projet
-COPY . /var/www/html/
+COPY . var/www/html
 
 # Changer DocumentRoot vers /public et config Apache
 RUN echo '<VirtualHost *:${PORT}>\n\
@@ -25,7 +25,7 @@ RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 # Adapter Apache au port Render
 RUN sed -i "s/Listen 80/Listen ${PORT}/g" /etc/apache2/ports.conf
 
-WORKDIR /var/www/html
+WORKDIR var/www/html
 
 EXPOSE 80
 
