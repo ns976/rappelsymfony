@@ -26,6 +26,12 @@ services:
         arguments: ['%env(STRIPE_PUBLIC_KEY)%',
                     '%env(STRIPE_SECRET_KEY)%']
     Cocur\Slugify\Slugify:
+
+    App\Doctrine\Listener\ProductSlugListener:
+        tags: [{ name: "doctrine.orm.entity_listener",event: prePersist,entity: App\Entity\Product }]
+    App\Doctrine\Listener\CategorySlugListener:
+        tags: [{ name: "doctrine.orm.entity_listener",event: prePersist,entity: App\Entity\Category }]
+#        tags: [{ name: doctrine.orm.listener,event: prePersist}] ==> cela impplique qu'on appel ce listener tous le temps probleme de performance surtout si cela cible 1 entity en particulier
 #    Peut etre remplacer par getSubscribedEvents dans la classse subscriber creer  de  interface de 'EventSubscriberInterface'
 #    App\eventDispatcher\prenomListener:
 #        tags: [

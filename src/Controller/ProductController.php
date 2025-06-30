@@ -83,7 +83,7 @@ class ProductController extends AbstractController
         $formulaire->handleRequest( $request );
         if($formulaire->isSubmitted() && $formulaire->isValid()){
             $product = $formulaire->getData();
-            $product->setSlug($product->getname());
+           // $product->setSlug($product->getname());
 
             $em->persist($product);
             $em->flush();

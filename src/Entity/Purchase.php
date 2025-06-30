@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Purchase
 {
@@ -71,7 +72,9 @@ class Purchase
 
     /**
      * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="Purchase", orphanRemoval=true)
+     *
      */
+    /**@var  $purchaseItems \App\Entity\PurchaseItem */
     private $purchaseItems;
 
 
@@ -80,6 +83,27 @@ class Purchase
         $this->purchaseItems = new ArrayCollection();
     }
 
+    /**
+     * @ORM\PrePersist
+     * @return void
+     */
+    public function prePersist(){
+        if(empty($this->PuchaseAt)){
+            $this->PuchaseAt = new DateTimeImmutable();
+        }
+
+    }
+    /**
+     * @ORM\PreFlush
+     * @return void
+     */
+    public function preFlushCaculTotal(){
+        $total= 0 ;
+        foreach($this->purchaseItems as $item){
+            $total += $item->getTotal();
+        }
+        $this->setTotal( $total);
+    }
     public function getId(): ?int
     {
         return $this->id;

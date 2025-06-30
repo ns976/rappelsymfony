@@ -71,7 +71,7 @@ class AppFixtures extends Fixture
         for ( $c = 0 ; $c < 3 ; $c++ ) {
             $category = new Category();
             $category -> setName( $faker -> department() )
-                -> setSlug( $this -> slug -> slug( $category -> getName() ) )
+                //-> setSlug( $this -> slug -> slug( $category -> getName() ) )
                 ->setOrwner( $faker->randomElement($users));
 
             $this -> em -> persist( $category );
@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
                 $product = new Product();
                 $product -> setName( $faker -> productName() )
                     -> setPrice( $faker -> price( 4000 , 20000 ) )
-                    -> setSlug( $this -> slug -> slug( $product -> getName() ) )
+                   // -> setSlug( $this -> slug -> slug( $product -> getName() ) )
                     -> setDescription( $faker ->text(100) )
                     -> setPicture( $faker->imageUrl(400,400,true)  )
                     -> setUserCreate($faker->randomElement($users) )

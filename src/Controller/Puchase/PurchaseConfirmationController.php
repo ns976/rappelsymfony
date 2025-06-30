@@ -49,9 +49,7 @@ class PurchaseConfirmationController extends AbstractController
 
 
         if($form->isSubmitted() && $form->isvalid()){
-            $Purchase->setUser( $User)
-                     ->setPuchaseAt(new \DateTimeImmutable())
-                     ->setTotal( $this->CartService->totalCart());
+            $Purchase->setUser( $User);
 
             foreach ($this->CartService->getCart() as $idproduct=>$quantite){
                 $purchaseItem = new purchaseItem();

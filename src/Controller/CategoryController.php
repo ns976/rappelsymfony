@@ -38,7 +38,7 @@ class CategoryController extends AbstractController
         $form->handleRequest( $request );
         if($form->isSubmitted() && $form->isValid()){
             $categorie = $form->getData();
-            $categorie->setSlug( $this->slug ->slug($categorie->getName()) );
+           //$categorie->setSlug( $this->slug ->slug($categorie->getName()) );
             $categorie->setOrwner($user);
             $this->em->persist( $categorie);
             $this->em->flush();
